@@ -41,38 +41,42 @@ let p_color = [250, 250, 250];
 let f_color = [191, 191, 191];
 
 //-- hierachical coloring -- Begin
-const PalRedCya = [[-1.0, 235, 20, 20], [0.0, 127, 127, 127], [1.0, 20, 255, 255],]; // default
-const PalGrey   = [[-1.0, 0, 0, 0], [1.0, 255, 255, 255],]; // geyscale
-const PalBluYel = [ [-1.0, 17, 95, 154], [0.0, 118, 198, 143], [1.0, 224, 241, 0],]; // classic sequential blue yellow 
-const PalGreRed = [ [-1.0, 215, 225, 238], [0.0, 134, 132, 138], [1.0, 153, 31, 23],]; // sequential Grey Red
-const PalBlkPnk = [ [-1.0, 43, 43, 40], [0.0, 115, 110, 107], [1.0, 255, 128, 255],]; // sequential Black Pink
-const PalBluRed = [ [-1.0, 25, 132, 197], [0.0, 226, 226, 226], [1.0, 194, 55, 40],]; // diverging Blue Red
-const PalOrgPrp = [ [-1.0, 255, 180, 0], [0.0, 84, 82, 100], [1.0, 144, 128, 255],]; // diverging Orange Purple
-const PaletteList = { PalDRedCya: PalRedCya, PalSGrey: PalGrey, PalSBluYel: PalBluYel, PalSGreRed: PalGreRed, PalSBlkPnk: PalBlkPnk, PalDBluRed: PalBluRed, PalDOrgPrp: PalOrgPrp };
+const PalRedCya = [[-1.0, 235, 20, 20], [0.0, 127, 127, 127], [1.0, 20, 255, 255]]; // default
+const PalRedCyaInv=[[-1.0, 20, 255, 255], [0.0, 127, 127, 127], [1.0, 235, 20, 20]];
+const PalGrey   = [[-1.0, 0, 0, 0], [1.0, 255, 255, 255]]; // geyscale
+const PalGreyInv= [[-1.0, 255, 255, 255], [1.0, 0, 0, 0]]; // geyscale inverted
+const PalGreRed = [ [-1.0, 215, 225, 238], [0.0, 134, 132, 138], [1.0, 153, 31, 23]]; // sequential Grey Red
+const PalBluYel = [ [-1.0, 17, 95, 154], [0.0, 118, 198, 143], [1.0, 224, 241, 0]]; // classic sequential blue yellow 
+const PalBlkPnk = [ [-1.0, 43, 43, 40], [0.0, 115, 110, 107], [1.0, 255, 128, 255]]; // sequential Black Pink
+const PalBluRed = [ [-1.0, 25, 132, 197], [0.0, 226, 226, 226], [1.0, 194, 55, 40]]; // diverging Blue Red
+const PalOrgPrp = [ [-1.0, 255, 180, 0], [0.0, 84, 82, 100], [1.0, 144, 128, 255]]; // diverging Orange Purple
+const PaletteList = { PalDRedCya:PalRedCya, PalDRedCyaInv:PalRedCyaInv, PalSGrey:PalGrey, PalSGreyInv:PalGreyInv, PalSGreRed:PalGreRed, PalSBluYel:PalBluYel, PalSBlkPnk:PalBlkPnk, PalDBluRed:PalBluRed, PalDOrgPrp:PalOrgPrp };
 
-const lv = -0.6;
-const MotifDual = { H1: -0.8, H: 0.8, T: -0.0, P: -0.8, F: 0.8 };
-const MotifH = { H1: 0.5, H: 1.0, T: lv, P: lv, F: lv };
-const MotifT = { H1: lv, H: lv, T: 1.0, P: lv, F: lv };
-const MotifP = { H1: lv, H: lv, T: lv, P: 1.0, F: lv };
-const MotifF = { H1: lv, H: lv, T: lv, P: lv, F: 1.0 };
-const MotifPF = { H1: 0.0, H: 0.0, T: 0.0, P: 1.0, F: -1.0 };
+const lv = -0.7;
+const hv = 1.0;
+const MotifH = { H1: hv/2, H: hv, T: lv, P: lv, F: lv };
+const MotifT = { H1: lv, H: lv, T: hv, P: lv, F: lv };
+const MotifP = { H1: lv, H: lv, T: lv, P: hv, F: lv };
+const MotifF = { H1: lv, H: lv, T: lv, P: lv, F: hv };
+const MotifPF = { H1: 0.0, H: 0.0, T: 0.0, P: 0.9, F: -0.9 };
+const MotifHF = { H1: -0.4, H: 0.9, T: 0.0, P: 0.0, F: -0.9 };
+const MotifDual = { H1: -0.7, H: 0.7, T: -0.0, P: -0.6, F: 0.6 };
 const Motif0 = { H1: 0.0, H: 0.0, T: 0.0, P: 0.0, F: 0.0 }; // used for debug / check flat result
-const MotifTest = { H1: 1.0, H: -1.0, T: 1.0, P: 0.0, F: 1.0 }; // test new motifs
-const MotifList = { NoHierColor: null, MDual: MotifDual, MH: MotifH, MT: MotifT, MP: MotifP, MF: MotifF, MPF: MotifPF, M0: Motif0, Test: MotifTest };
+const MotifTest = { H1: 1.0, H: -1.0, T: -1.0, P: -0.5, F: 1.0 }; // test new motifs
+const MotifList = { NoHierColor:null, MH:MotifH, MT:MotifT, MP:MotifP, MF:MotifF, MPF:MotifPF, MHF:MotifHF, MDual:MotifDual, M0:Motif0, Test:MotifTest };
 
 let bHiCol = false; // enables Hierachical coloring
 let Pal = PalRedCya; // selected Palette
 let HatMotif = MotifDual; // selected motif for hat in cluster, range (-1,1)
 let MetaMotif = MotifDual; // selected motif for metatiles, range (-1,1)
 
-// adapts contrast to # levels and to Current Level, top metatile is neutral => number of levels = level-1
+// adapts contrast to # levels and to Current Level, top metatile is neutral => #levels=level+1-1
 function HiContrast(CurrLev = 0) {
   if (level == 1) return 1.0;
-  const avgContrast = 1.0 / (level - 1); // linear normalization
-  //const avgContrast = 1.0/sqrt((level-1)); // normalization based on std_dev (2.0 bionomial)
+  const avgContrast = 1.0 / level; // linear normalization
+  //const avgContrast = 1.0/sqrt(level); // for #levels high, normalization based on std_dev (2.0 bionomial)
   const prgContrast = -0.3; // range (-1: highlights top metatiles, 1: highlights hats), 0: neutral
-  let LevContrast = (1 + prgContrast) - 2 * prgContrast * CurrLev / (level - 1);
+  let LevContrast = (1 + prgContrast) - 2 * prgContrast * CurrLev / level;
   return avgContrast * LevContrast;
 }
 // maps val (range -1.0, 1.0) to color through palette Pal
@@ -158,13 +162,13 @@ function trot( ang )
 {
 	const c = cos( ang );
 	const s = sin( ang );
-  return [c, -s, 0, s, c, 0];
+    return [c, -s, 0, s, c, 0];
 }
 
 // Translation matrix
 function ttrans( tx, ty )
 {
-  return [1, 0, tx, 0, 1, ty];
+    return [1, 0, tx, 0, 1, ty];
 }
 
 function rotAbout( p, ang )
@@ -193,7 +197,7 @@ function matchTwo( p1, q1, p2, q2 )
 
 function intersect( p1, q1, p2, q2 )
 {
-  const d = (q2.y - p2.y) * (q1.x - p1.x) - (q2.x - p2.x) * (q1.y - p1.y);
+    const d = (q2.y - p2.y) * (q1.x - p1.x) - (q2.x - p2.x) * (q1.y - p1.y);
     const uA = ((q2.x - p2.x) * (p1.y - p2.y) - (q2.y - p2.y) * (p1.x - p2.x)) / d;
     const uB = ((q1.x - p1.x) * (p1.y - p2.y) - (q1.y - p1.y) * (p1.x - p2.x)) / d;
 
@@ -202,8 +206,8 @@ function intersect( p1, q1, p2, q2 )
 
 function drawPolygon( shape, T, f, s, w )
 {
-	if( f != null ) {
-		fill( ...f );
+  if( f != null ) {
+	fill( ...f );
   } else {
     noFill();
   }
@@ -234,13 +238,13 @@ class Geom
     this.HiCol = HiCol;
   }
 
-	addChild( T, geom )
+  addChild( T, geom )
 	{
 		this.children.push( { T : T, geom : geom } );
   }
 
-	evalChild( n, i )
-	{
+  evalChild( n, i )
+  {
 		return transPt( this.children[n].T, this.children[n].geom.shape[i] );
   }
 
@@ -268,57 +272,57 @@ class Geom
     }
   }
 
-	recentre()
+  recentre()
 	{
     let cx = 0;
     let cy = 0;
-		for( let p of this.shape ) {
+	for( let p of this.shape ) {
       cx += p.x;
       cy += p.y;
     }
     cx /= this.shape.length;
     cy /= this.shape.length;
-		const tr = pt( -cx, -cy );
+	const tr = pt( -cx, -cy );
 
-		for( let idx = 0; idx < this.shape.length; ++idx ) {
-			this.shape[idx] = padd( this.shape[idx], tr );
+	for( let idx = 0; idx < this.shape.length; ++idx ) {
+		this.shape[idx] = padd( this.shape[idx], tr );
     }
 
-		const M = ttrans( -cx, -cy );
-		for( let ch of this.children ) {
-			ch.T = mul( M, ch.T );
+	const M = ttrans( -cx, -cy );
+	for( let ch of this.children ) {
+		ch.T = mul( M, ch.T );
     }
   }
 
 	resetSVG()
 	{
-		for( let ch of this.children ) {
+	for( let ch of this.children ) {
       ch.geom.resetSVG();
     }
     this.svg_id = null;
-  }
+    }
 
 	buildSVGDefs( stream, sc )
 	{
-		if( this.svg_id != null ) {
+	if( this.svg_id != null ) {
       return;
     }
 
-		this.svg_id = 't' + String(svg_serial).padStart( 5, '0' );
+	this.svg_id = 't' + String(svg_serial).padStart( 5, '0' );
     ++svg_serial;
 
-		for( let ch of this.children ) {
+	for( let ch of this.children ) {
       const T = ch.T;
-			ch.geom.buildSVGDefs( stream, sc * mag( T[0], T[1] ) );
+		ch.geom.buildSVGDefs( stream, sc * mag( T[0], T[1] ) );
     }
 
     // Stroked group
-		stream.push( `  <g id="${this.svg_id}s">` );
+	stream.push( `  <g id="${this.svg_id}s">` );
 
-		for( let ch of this.children ) {
+	for( let ch of this.children ) {
       const T = ch.T;
       const gid = ch.geom.svg_id;
-			stream.push( `    <use xlink:href="#${gid}s" transform="matrix(${T[0]} ${T[3]} ${T[1]} ${T[4]} ${T[2]} ${T[5]})"/>` );
+		stream.push( `    <use xlink:href="#${gid}s" transform="matrix(${T[0]} ${T[3]} ${T[1]} ${T[4]} ${T[2]} ${T[5]})"/>` );
     }
 
 		if( (this.shape.length > 0) && (this.fill == null) ) {
@@ -330,7 +334,7 @@ class Geom
 				verts = verts + p.x + ',' + p.y;
       }
       let str = ' stroke="none"';
-			if( this.stroke != null ) {
+		if( this.stroke != null ) {
         let st = this.stroke;
 				if( st.length == 1 ) {
           st = [st[0], st[0], st[0]];
@@ -527,8 +531,8 @@ function constructPatch( H, T, P, F )
       const chP = ret.children[r[0]];
       const chQ = ret.children[r[2]];
 
-			const P = transPt( chQ.T, chQ.geom.shape[r[3]] );
-			const Q = transPt( chP.T, chP.geom.shape[r[1]] );
+	  const P = transPt( chQ.T, chQ.geom.shape[r[3]] );
+	  const Q = transPt( chP.T, chP.geom.shape[r[1]] );
       const nshp = shapes[r[4]];
       const npoly = nshp.shape;
 
@@ -551,10 +555,10 @@ function constructMetatiles( patch )
 	const p252 = patch.evalChild( 25, 2 );
 
 	const llc = intersect( bps1, rbps,
-		patch.evalChild( 6, 2 ), p72 );
+	patch.evalChild( 6, 2 ), p72 );
 	let w = psub( patch.evalChild( 6, 2 ), llc );
 
-  const new_H_outline = [llc, bps1];
+    const new_H_outline = [llc, bps1];
 	w = transPt( trot( -PI/3 ), w );
 	new_H_outline.push( padd( new_H_outline[1], w ) );
 	new_H_outline.push( patch.evalChild( 14, 2 ) );
@@ -562,41 +566,41 @@ function constructMetatiles( patch )
 	new_H_outline.push( psub( new_H_outline[3], w ) );
 	new_H_outline.push( patch.evalChild( 6, 2 ) );
 
-  const new_H = new Geom(new_H_outline, null, [0, 0, 0], MetaMotif['H']);
-  new_H.width = patch.width * 2;
+    const new_H = new Geom(new_H_outline, null, [0, 0, 0], MetaMotif['H']);
+    new_H.width = patch.width * 2;
 	for( let ch of [0, 9, 16, 27, 26, 6, 1, 8, 10, 15] ) {
 		new_H.addChild( patch.children[ch].T, patch.children[ch].geom );
-  }
+    }
 
 	const new_P_outline = [ p72, padd( p72, psub( bps1, llc ) ), bps1, llc ];
-  const new_P = new Geom(new_P_outline, null, [0, 0, 0], MetaMotif['P']);
-  new_P.width = patch.width * 2;
+    const new_P = new Geom(new_P_outline, null, [0, 0, 0], MetaMotif['P']);
+    new_P.width = patch.width * 2;
 	for( let ch of [7,2,3,4,28] ) {
 		new_P.addChild( patch.children[ch].T, patch.children[ch].geom );
-  }
+    }
 
-  const new_F_outline = [
+    const new_F_outline = [
 		bps2, patch.evalChild( 24, 2 ), patch.evalChild( 25, 0 ),
 		p252, padd( p252, psub( llc, bps1 ) ) ];
-  const new_F = new Geom(new_F_outline, null, [0, 0, 0], MetaMotif['F']);
-  new_F.width = patch.width * 2;
+    const new_F = new Geom(new_F_outline, null, [0, 0, 0], MetaMotif['F']);
+    new_F.width = patch.width * 2;
 	for( let ch of [21,20,22,23,24,25] ) {
 		new_F.addChild( patch.children[ch].T, patch.children[ch].geom );
-  }
+    }
 
-  const AAA = new_H_outline[2];
+    const AAA = new_H_outline[2];
 	const BBB = padd( new_H_outline[1], 
-		psub( new_H_outline[4], new_H_outline[5] ) );
+	psub( new_H_outline[4], new_H_outline[5] ) );
 	const CCC = transPt( rotAbout( BBB, -PI/3 ), AAA );
 	const new_T_outline = [BBB,CCC,AAA];
-  const new_T = new Geom(new_T_outline, null, [0, 0, 0], MetaMotif['T']);
-  new_T.width = patch.width * 2;
+    const new_T = new Geom(new_T_outline, null, [0, 0, 0], MetaMotif['T']);
+    new_T.width = patch.width * 2;
 	new_T.addChild( patch.children[11].T, patch.children[11].geom );
 
-  new_H.recentre();
-  new_P.recentre();
-  new_F.recentre();
-  new_T.recentre();
+    new_H.recentre();
+    new_P.recentre();
+    new_F.recentre();
+    new_T.recentre();
 
 	return [new_H, new_T, new_P, new_F]
 }
@@ -614,8 +618,8 @@ function setButtonActive( but, b )
 function setup() {
 	createCanvas( windowWidth, windowHeight );
 
-  tiles = [H_init, T_init, P_init, F_init];
-  level = 1;
+    tiles = [H_init, T_init, P_init, F_init];
+    level = 1;
 
 	reset_button = createButton( "Reset" );
 	reset_button.position( 10, box_height );
@@ -643,13 +647,13 @@ function setup() {
 	} );
 	box_height += 40;
 
-  radio = createRadio();
+    radio = createRadio();
 	radio.mousePressed( function() { loop() } );
 	radio.position( 10, box_height );
 	for( let s of ['H', 'T', 'P', 'F'] ) {
 		let o = radio.option( s );
     o.onclick = loop;
-  }
+    }
 	radio.selected( 'H' );
 	box_height += 40;
 
@@ -770,7 +774,7 @@ function setup() {
 	box_height -= 5; // remove half the padding
   
   //-- Hierchical color options --
-   let selMotif = createSelect();
+  let selMotif = createSelect();
   selMotif.position(10, 550);
   selMotif.size(125, 20);
   selMotif.selected(Object.keys(MotifList)[0]);
@@ -817,31 +821,31 @@ function setup() {
 
 function draw()
 {
-	background( 255 );
+    background( 255 );
 
-  push();
+    push();
 	translate( width/2, height/2 );
 	const idx = {'H':0, 'T':1, 'P':2, 'F':3}[radio.value()];
-  tiles[idx].HiCol = 0; // top metatile is neutral in hierchical coloring
+    tiles[idx].HiCol = 0; // top metatile is neutral in hierchical coloring
 
 	if( isButtonActive( draw_hats ) ) {
 		tiles[idx].draw( to_screen, level );
-  }
+    }
 
 	if( isButtonActive( draw_super ) ) {
 		for( let lev = level - 1; lev >= 0; --lev ) {
 			tiles[idx].draw( to_screen, lev );
+        }
     }
-  }
-  pop();
+    pop();
 
 	if( uibox ) {
 		stroke( 0 );
 		strokeWeight( 0.5 );
 		fill( 255, 220 );
 		rect( 5, 5, 135, box_height);
-  }
-  noLoop();
+    }
+   noLoop();
 }
 
 function windowResized() 
